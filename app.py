@@ -1848,7 +1848,7 @@ def build_fee_review(school, class_name, student_id, fee_month, status, receipt_
         student = connection.execute("SELECT id, uid_number, student_name, roll_number FROM managed_students WHERE id = ? AND school_id = ? AND class_name = ?", (student_id, school["id"], class_name)).fetchone()
     if student is None:
         return None
-    review = {"student_name": student["student_name"], "class_name": class_name, "uid_number": student["uid_number"], "roll_number": student["roll_number"], "month": fee_month, "status": status, "token": token, "receipt_data": None, "receipt_mime": "image/png"}
+    review = {"school_id": school["id"], "class_name": class_name, "student_id": student_id, "fee_month": fee_month, "student_name": student["student_name"], "uid_number": student["uid_number"], "roll_number": student["roll_number"], "month": fee_month, "status": status, "token": token, "receipt_data": None, "receipt_mime": "image/png"}
     if receipt_path:
         review["receipt_data"] = base64.b64encode(receipt_path.read_bytes()).decode("ascii")
     return review
